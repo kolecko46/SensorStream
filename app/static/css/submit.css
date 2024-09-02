@@ -1,0 +1,93 @@
+
+.f_name,
+.l_name {
+    display: inline-block;
+    margin-bottom: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+    border-width: 1px;
+}
+
+.email {
+    display: block;
+    width: 365px;
+    margin-bottom: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+    border-width: 1px;
+}
+
+.sign_up_btn {
+    display: block;
+    width: 387px;
+    height: 60px;
+    background-color: rgb(141, 141, 233);
+    color: white;
+    font-size: 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: opacity 0.25s;
+}
+
+.sign_up_btn:hover {
+    opacity: 0.75;
+}
+
+.sign_up_btn:active {
+    opacity: 0.5;
+}
+
+.uber_p {
+    font-size: 50px;
+    font-family: Arial;
+    margin-bottom: 30px;
+}
+
+.uber_start,
+.uber_end {
+    display: block;
+    font-family: Arial;
+    font-size: 15px;
+    background-color: rgb(252, 233, 233);
+    margin-bottom: 5px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 25px;
+    width: 500px;
+    border: none;
+}
+
+.uber_req,
+.uber_sche {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border: none;
+    margin-right: 20px;
+    margin-top: 40px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: opacity 0.25s;
+}
+
+.uber_req:hover,
+.uber_sche:hover {
+    opacity: 0.75;
+}
+
+.uber_req {
+    background-color: black;
+    color: white;
+}
+
+.uber_sche {
+    background-color: rgb(252, 233, 233);
+}
