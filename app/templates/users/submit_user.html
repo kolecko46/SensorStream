@@ -11,9 +11,35 @@
         <input class="f_name" name="first_name" type="text" placeholder="First name">
         <input class="l_name" name="last_name" type="text" placeholder="Last name">
         <br>
-        <!-- <input class="pswd" name="password" type="password" placeholder="Password"> -->
+        <input class="pswd" name="password" type="password" placeholder="Password">
         <input class="email" name="email" type="email" placeholder="Email">
-        <button class="sign_up_btn">Sign Up</button>
+        <button type="submit" class="sign_up_btn">Sign Up</button>
     </form>
+
+    <script>
+        document.getElementById('signup_form').addEventListener('submit',async function(event) {
+            event.preventDefault();
+
+            const formData = {
+                first_name: event.target.first_name.value,
+                last_name: event.target.last_name.value,
+                password: event.target.password.value,
+                email: event.target.email.value
+            };
+
+            const response = await fetch("/submit_user", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const result = await response.text();
+            document.body.innerHTML = result;
+        });
+    </script>
+
+
 </body>
 </html>

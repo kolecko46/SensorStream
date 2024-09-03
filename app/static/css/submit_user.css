@@ -12,7 +12,7 @@
 }
 
 .pswd {    
-    /* display: inline-block; */
+    display: block;
     width: 365px;
     margin-bottom: 15px;
     padding-left: 10px;

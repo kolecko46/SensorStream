@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Searcher</title>
+    <link rel="icon" href="../static/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../static/css/submit_user.css">
+
+</head>
+<body>
+    <form id="login_form" action="/login" method="post">
+        <input class="email" name="email" type="email" placeholder="Email">
+        <input class="pswd" name="password" type="password" placeholder="Password">
+        <button type="login" class="sign_up_btn">Sign Up</button>
+    </form>
+
+    <script>
+        document.getElementById('login_form').addEventListener('login',async function(event) {
+            event.preventDefault();
+
+            const formData = {
+                email: event.target.email.value,
+                password: event.target.password.value
+            };
+
+            const response = await fetch("/login", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const result = await response.text();
+            document.body.innerHTML = result;
+        });
+    </script>
+
+
+</body>
+</html>

@@ -12,3 +12,7 @@ class CreateUser(BaseModel):
     last_name: str
     password: str
     email: EmailStr
+
+class Login(BaseModel):
+    email: EmailStr
+    password: str
