@@ -44,8 +44,3 @@ def dht11_sensor(data: schemas.SensorData):
     cursor.execute(sql,values)
 
     connection.commit()
-
-    temperature = data.temperature
-    humidity = data.humidity
-    date_time = data.date_time
-    # print(f"temperature:", {temperature}, " humidity:", {humidity}, " datetime:", {date_time})

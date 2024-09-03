@@ -2,3 +2,4 @@ env
 __pycache__
 pcc.jpg
 nepotrebne
+app/modules/credentials.py

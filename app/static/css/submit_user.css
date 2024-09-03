@@ -1,0 +1,58 @@
+
+.f_name,
+.l_name {
+    display: inline-block;
+    margin-bottom: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+    border-width: 1px;
+}
+
+.pswd {    
+    /* display: inline-block; */
+    width: 365px;
+    margin-bottom: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+    border-width: 1px;
+}
+
+.email {
+    display: block;
+    width: 365px;
+    margin-bottom: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+    border-width: 1px;
+}
+
+.sign_up_btn {
+    display: block;
+    width: 387px;
+    height: 60px;
+    background-color: rgb(141, 141, 233);
+    color: white;
+    font-size: 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: opacity 0.25s;
+}
+
+.sign_up_btn:hover {
+    opacity: 0.75;
+}
+
+.sign_up_btn:active {
+    opacity: 0.5;
+}
+

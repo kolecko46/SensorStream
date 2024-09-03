@@ -1,12 +1,13 @@
 import mysql.connector
 import time
+from modules import credentials
 
 while True:
     try:
         connection = mysql.connector.connect(
             host = "localhost",
             user = "root",
-            password = "123456789Mk!",
+            password = credentials.database_psw,
             database = "ichannel8_export"
         )
     
