@@ -9,7 +9,7 @@ templates = Jinja2Templates(directory="templates")
 
 router = APIRouter(
     prefix="/arduino",
-    tags=['Text']
+    tags=['Arduino']
 )
 
 @router.get('/test')
