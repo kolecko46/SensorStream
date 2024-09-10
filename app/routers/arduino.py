@@ -1,9 +1,10 @@
 from fastapi import APIRouter, Request, Form
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from modules import schemas
 from modules.database_connector import connection, cursor
-from datetime import datetime
+import pandas
+
 
 templates = Jinja2Templates(directory="templates")
 
@@ -18,22 +19,13 @@ def text_1(request: Request):
 
 @router.get('/dht11')
 def get_dht11_data(request: Request):
-    data_list = {"data":[]}
-    sql = """SELECT * FROM moj_server.dht11"""
+    data_frame = pandas.read_sql("SELECT * FROM moj_server.dht11", connection)
+    html_table = data_frame.to_html(index=False)
+    
+    with open("./templates/arduino/dht11_data.html", "w") as file:
+        file.write(html_table)
 
-    cursor.execute(sql)
-
-    sql_data = cursor.fetchall()
-
-    for data in sql_data:
-        formatted_data = [
-            data[0],
-            data[1],
-            data[2].isoformat()
-        ]
-        data_list["data"].append(formatted_data)
-
-    return JSONResponse(content=data_list)
+    return templates.TemplateResponse("arduino/dht11_data.html", {"request": request})
 
 @router.post('/dht11')
 def dht11_sensor(data: schemas.SensorData):
