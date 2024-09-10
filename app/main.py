@@ -2,7 +2,8 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from routers import root_index, arduino, users
-# from .connector.database_connector import connection, cursor
+from modules.database_connector import engine
+from modules import models
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
