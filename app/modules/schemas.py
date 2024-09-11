@@ -5,7 +5,10 @@ from datetime import datetime
 class SensorData(BaseModel):
     temperature: str
     humidity: str
-    date_time: str
+    created_at: datetime
+
+    class Config:
+        orm_mode = True
 
 class CreateUser(BaseModel):
     first_name: str
