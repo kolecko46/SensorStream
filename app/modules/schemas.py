@@ -16,6 +16,16 @@ class CreateUser(BaseModel):
     password: str
     email: EmailStr
 
+    class Config:
+        orm_mode = True
+
+class GetUser(BaseModel):
+    id: int
+    email: EmailStr
+
+    class Config:
+        orm_mode = True
+
 class Login(BaseModel):
     email: EmailStr
     password: str

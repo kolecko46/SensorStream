@@ -15,26 +15,23 @@ router = APIRouter(
     prefix="/arduino",
     tags=['Arduino']
 )
+# DATA
+@router.get('/dht11',
+            response_model=List[schemas.SensorData])
+def get_dht11_data(request: Request,
+                   database: Session = Depends(get_database)):
+    
+    data = database.query(DHT11_data).all()
 
-@router.get('/test')
-def text_1(request: Request):
-    return {"arduino":"hello"}
+    return data
 
-@router.get('/dht11', response_model=List[schemas.SensorData])
-def get_dht11_data(request: Request, database: Session = Depends(get_database)):
-    data_query = database.query(DHT11_data).all()
-
-    return data_query
-
+# DATA
 @router.post('/dht11')
-def dht11_sensor(data: schemas.SensorData):
+def dht11_sensor(data: schemas.SensorData,
+                 database: Session = Depends(get_database)):
     
-    sql = """INSERT INTO moj_server.dht11 (temperature, humidity, created_at) VALUES (%s,%s,%s)"""
-    values = (data.temperature, data.humidity, data.date_time)
+    new_data = DHT11_data(**data.dict()) 
     
-    cursor.execute(sql,values)
-
-    connection.commit()
-
-
- 
+    database.add(new_data)
+    database.commit()
+    database.refresh(new_data)
