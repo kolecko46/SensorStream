@@ -26,6 +26,9 @@ class GetUser(BaseModel):
     class Config:
         orm_mode = True
 
-class Login(BaseModel):
+class LoginUser(BaseModel):
     email: EmailStr
     password: str
+
+    # class Config:
+    #     orm_mode = True

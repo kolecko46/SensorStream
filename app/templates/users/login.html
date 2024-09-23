@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Searcher</title>
+    <title>Login</title>
     <link rel="icon" href="../static/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="../static/css/submit_user.css">
 
@@ -10,7 +10,7 @@
     <form id="login_form" action="/login" method="post">
         <input class="email" name="email" type="email" placeholder="Email">
         <input class="pswd" name="password" type="password" placeholder="Password">
-        <button type="login" class="sign_up_btn">Sign Up</button>
+        <button type="login" class="sign_up_btn">Login</button>
     </form>
 
     <script>
@@ -25,16 +25,16 @@
             const response = await fetch("/login", {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/x-www-form-urlencoded'
                 },
                 body: JSON.stringify(formData)
-            });
+            });    
 
-            const result = await response.text();
-            document.body.innerHTML = result;
+            const data = await response.json();
+            // document.body.innerHTML = result;
+            console.log('Server response:', data);
         });
     </script>
-
 
 </body>
 </html>
