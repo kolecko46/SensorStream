@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, status, HTTPException, Response, Request
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from sqlalchemy.orm import Session
-from modules import schemas, utilities, models
+from modules import schemas, utilities, models, oauth2
 from modules.database_connector import engine, get_database
 
 
@@ -17,12 +17,12 @@ router = APIRouter(
 
 # Login
 # HTML
-@router.get("/")
+@router.get("")
 def login_html(request: Request):
     
     return templates.TemplateResponse("users/login.html", {"request": request})
 
-@router.post("/")
+@router.post("")
 def login(data: schemas.LoginUser,
           database: Session = Depends(get_database)):
     
@@ -38,7 +38,7 @@ def login(data: schemas.LoginUser,
                             detail=f"Invalid credentials")
     
     # Create token
-
+    acces_token = oauth2.create_access_token({"user_id":user.id})
 
     # Return token
     return HTMLResponse(content=f"<p>hello {data.email}</p>")

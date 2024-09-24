@@ -14,7 +14,7 @@
     </form>
 
     <script>
-        document.getElementById('login_form').addEventListener('login',async function(event) {
+        document.getElementById('login_form').addEventListener('submit',async function(event) {
             event.preventDefault();
 
             const formData = {
@@ -30,9 +30,9 @@
                 body: JSON.stringify(formData)
             });    
 
-            const data = await response.json();
-            // document.body.innerHTML = result;
-            console.log('Server response:', data);
+            const data = await response.text();
+            document.body.innerHTML = data;
+            // console.log('Server response:', data);
         });
     </script>
 

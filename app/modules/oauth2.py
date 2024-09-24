@@ -1,17 +1,18 @@
-from fastapi import Depends, HTTPException, status, APIRouter
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from fastapi.templating import Jinja2Templates
-from modules.database_connector import connection, cursor
-from modules import schemas
+from jose import JWTError, jwt
+from datetime import datetime, timedelta
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+SECRET_KEY = "6f102a47cca91fba6316a778f16ff61e47d1bde050356b09ada5ca91b7260e53"
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
-templates = Jinja2Templates(directory="templates")
+def create_access_token(data: dict):
+    to_encode = data.copy()
 
-router = APIRouter(
-    tags=['Login']
-)
+    expire = datetime.now() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    to_encode.update({"exp": expire})
 
-@router.post("/login")
-async def login(form_data: OAuth2PasswordRequestForm = Depends(), data = schemas.Login):
-    sql = """SELECT * FROM moj_server.users"""
+    encoded_jwt = jwt.encode(to_encode,
+                             SECRET_KEY, 
+                             ALGORITHM)
+    
+    return encoded_jwt
