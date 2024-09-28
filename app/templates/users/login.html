@@ -8,7 +8,7 @@
 </head>
 <body>
     <form id="login_form" action="/login" method="post">
-        <input class="email" name="email" type="email" placeholder="Email">
+        <input class="email" name="username" type="email" placeholder="Email">
         <input class="pswd" name="password" type="password" placeholder="Password">
         <button type="login" class="sign_up_btn">Login</button>
     </form>
@@ -17,24 +17,42 @@
         document.getElementById('login_form').addEventListener('submit',async function(event) {
             event.preventDefault();
 
-            const formData = {
-                email: event.target.email.value,
-                password: event.target.password.value
-            };
+            const formData = new FormData(event.target);
 
             const response = await fetch("/login", {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });    
+                body: formData
+            });
 
-            const data = await response.text();
-            document.body.innerHTML = data;
-            // console.log('Server response:', data);
+            if (response.ok){
+                const data = await response.json(); // Get JSON response
+                const token = data.access_token; // Extract the access token
+
+                // Store the token in localStorage (or sessionStorage)
+                localStorage.setItem("access_token", token);
+
+                // Redirect to another page
+                window.location.href = "/index"
+            } else {
+                const errorData = await response.json();
+                alert("Error: ${errorData.detail}");
+            }
+
         });
     </script>
 
 </body>
 </html>
+
+
+
+<!-- 
+const token = localStorage.getItem('access_token');
+
+// Use the token in your requests as needed
+const response = await fetch('/some_protected_route', {
+    method: 'GET',
+    headers: {
+        'Authorization': `Bearer ${token}`
+    }
+}); -->
