@@ -2,6 +2,11 @@ from pydantic import BaseModel, EmailStr
 from datetime import datetime
 from typing import Optional
 
+class CalculatorData(BaseModel):
+    num1: float
+    num2: float
+    operation: str
+
 class SensorData(BaseModel):
     temperature: str
     humidity: str

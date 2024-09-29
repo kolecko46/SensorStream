@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Calculator</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../static/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../static/css/calculator.css">
+</head>
+
+<body>
+    
+        <div class="calculator">
+            <h1>Simple Calculator</h1>
+            <style>
+                .calculator {
+                    margin-top: 250px;
+                    margin-left: 500px;
+                    height: 90px;
+                    object-position: center;
+                }
+            </style>
+            <form id="calculator">
+                <input type="number" name="num1" placeholder="Number 1" required>
+                <input type="number" name="num2" placeholder="Number 2" required>
+                <select name="operation" required>
+                    <option value="add">+</option>
+                    <option value="subtract">-</option>
+                    <option value="multiply">*</option>
+                    <option value="divide">/</option>
+                </select>
+                <button type="submit">Calculate</button>
+            </form>
+        </div>    
+        <div class="result_cls" id="result">
+            <style>
+                .result_cls {
+                    margin-top: 250px;
+                    margin-left: 500px;
+                    object-position: center;
+                }
+            </style>
+        </div>
+
+
+        <script>
+            document.getElementById('calculator').addEventListener("submit",async function(event){
+                event.preventDefault();
+
+                const formData = new FormData(event.target);
+
+                const data = {
+                    num1:parseFloat(formData.get("num1")),
+                    num2:parseFloat(formData.get("num2")),
+                    operation: formData.get("operation")
+                };
+
+                const response = await fetch('/calculator',{
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+                document.getElementById('result').innerText = `Result: ${result.result}`;
+            });
+        </script>
+</body>
+</html>

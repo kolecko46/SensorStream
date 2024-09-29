@@ -13,7 +13,7 @@ templates = Jinja2Templates(directory="templates")
 
 router = APIRouter(
     prefix="/arduino",
-    tags=['Arduino']
+    tags=["Arduino"]
 )
 # DATA
 @router.get('/dht11',

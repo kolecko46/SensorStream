@@ -1,0 +1,30 @@
+from fastapi import APIRouter ,FastAPI, Request
+from fastapi.responses import JSONResponse
+from fastapi.templating import Jinja2Templates
+from modules import schemas
+
+templates = Jinja2Templates(directory="templates")
+
+router = APIRouter(
+    tags=["Utilities"]
+)
+
+@router.get("/calculator")
+async def show_calculator(request: Request):
+
+    return templates.TemplateResponse("web_utilities/calculator.html", {"request": request})
+
+@router.post("/calculator")
+async def calculator_logic(data: schemas.CalculatorData):
+    if data.operation == "add":
+        result = data.num1 + data.num2
+    elif data.operation == "substract":
+        result = data.num1 - data.num2
+    elif data.operation == "multiply":
+        result = data.num1 * data.num2
+    elif data.operation == "divide":
+        result = data.num1 / data.num2
+    else:
+        return JSONResponse(content={"error":"Invalid Operation"}, status_code=400)
+    
+    return JSONResponse(content={"result": result})
