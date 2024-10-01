@@ -17,6 +17,9 @@
         document.getElementById('login_form').addEventListener('submit',async function(event) {
             event.preventDefault();
 
+            const lolo = "lolo";
+            console.log(lolo);
+
             const formData = new FormData(event.target);
 
             const response = await fetch("/login", {
@@ -24,7 +27,7 @@
                 body: formData
             });
 
-            if (response.ok){
+            if (response.ok) {
                 const data = await response.json(); // Get JSON response
                 const token = data.access_token; // Extract the access token
 

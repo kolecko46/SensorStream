@@ -4,7 +4,7 @@ from fastapi.responses import HTMLResponse
 from sqlalchemy.orm import Session
 from modules import schemas, oauth2
 from modules.models import Base, DHT11_data
-from modules.database_connector import engine, connection, cursor, get_database
+from modules.database_connector import engine, get_database
 from typing import List
 
 Base.metadata.create_all(bind=engine)
