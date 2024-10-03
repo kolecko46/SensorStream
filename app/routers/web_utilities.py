@@ -13,6 +13,8 @@ router = APIRouter(
 async def show_calculator(request: Request,
                           user_id: int = Depends(oauth2.get_current_user)):
 
+    print(user_id)
+
     return templates.TemplateResponse("web_utilities/calculator.html", {"request": request})
 
 @router.post("/calculator")

@@ -8,10 +8,13 @@ from modules import models
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
+origins = ["http://192.168.0.101:3000",
+           "http://192.168.0.101:8000"]
+
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # or specify your frontend URL
+    allow_origins=origins,  # or specify your frontend URL
     allow_credentials=True,
     allow_methods=["*"],  # or specify methods
     allow_headers=["*"],  # or specify headers

@@ -9,12 +9,48 @@
 
     <body>
         <h1>Menu</h1>
-        <a class="buttons" href="http://192.168.0.101:8000/arduino/dht11">DHT11 data</a>
-        <a class="buttons" href="http://192.168.0.101:8000/calculator">Calculator</a>
+        <button class="buttons" id="DHT11Data">DHT11 data</button>
+        <button class="buttons" id="Calculator">Calculator</button>
     
     <script>
-        const user_token = localStorage.getItem("access_token");
-        console.log(user_token);
+        console.log("index: ok");
+        
+        document.getElementById("Calculator").addEventListener("click", async function() {
+            await navigateToProtectedPage("/calculator");
+        });
+
+        document.getElementById("DHT11Data").addEventListener("click", async function( ){
+            await navigateToProtectedPage("/arduino/dht11");
+        });
+
+        async function navigateToProtectedPage(endpoint) {
+            const user_token = localStorage.getItem("access_token");
+
+            if (!user_token) {
+                alert("No acces token. Please log in");
+                window.location.href = "/login";
+                return;
+            }
+
+            const token_response = await fetch(endpoint, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${user_token}`
+                }
+            });
+
+            if (token_response.ok) {
+                const htmlContent = await token_response.text();
+                document.body.innerHTML = htmlContent;
+                
+                window.history.pushState({path: endpoint}, '', endpoint);
+
+            } else {
+                alert("Invalid token. Redirecting to login.")
+                windows.location.href = "/login";
+            }
+        }
     </script>
     
     

@@ -28,7 +28,7 @@
                 <option value="multiply">*</option>
                 <option value="divide">/</option>
             </select>
-            <button type="submit">Calculate</button>
+            <button id="getResult" type="submit">Calculate</button>
         </form>
     </div>    
     <div class="result_cls" id="result">
@@ -42,45 +42,32 @@
     </div>
 
         <script>
-            async function getPage() {    
-                const user_token = localStorage.getItem("access_token");
-                console.log(user_token);
+            console.log("calculator: ok2");
 
-                const token_response = await fetch('/calculator', {
-                    method: 'GET',
+            document.getElementById('calculator').addEventListener("submit",async function(event){
+                event.preventDefault();
+                const user_token = localStorage.getItem("access_token");
+                const formData = new FormData(event.target);
+
+                const data = {
+                    num1:parseFloat(formData.get("num1")),
+                    num2:parseFloat(formData.get("num2")),
+                    operation: formData.get("operation")
+                };
+
+                const response = await fetch('/calculator',{
+                    method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${user_token}`
-                    }
+                    },
+                    body: JSON.stringify(data)
                 });
-                }
-                window.location.href = "/calculator"
-            getPage();
-                
-            // document.getElementById('calculator').addEventListener("submit",async function(event){
-            //     event.preventDefault();
 
-
-            //     const formData = new FormData(event.target);
-
-            //     const data = {
-            //         num1:parseFloat(formData.get("num1")),
-            //         num2:parseFloat(formData.get("num2")),
-            //         operation: formData.get("operation")
-            //     };
-
-            //     const response = await fetch('/calculator',{
-            //         method: 'POST',
-            //         headers: {
-            //             'Content-Type': 'application/json',
-            //             'Authorization': `Bearer ${user_token}`
-            //         },
-            //         body: JSON.stringify(data)
-            //     });
-
-            //     const result = await response.json();
-            //     document.getElementById('result').innerText = `Result: ${result.result}`;
-            // });
+                const result = await response.json();
+                document.getElementById('result').innerText = `Result: ${result.result}`;
+            });
+            
         </script>
 </body>
 </html>

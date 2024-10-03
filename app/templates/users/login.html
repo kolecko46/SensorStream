@@ -17,9 +17,6 @@
         document.getElementById('login_form').addEventListener('submit',async function(event) {
             event.preventDefault();
 
-            const lolo = "lolo";
-            console.log(lolo);
-
             const formData = new FormData(event.target);
 
             const response = await fetch("/login", {
