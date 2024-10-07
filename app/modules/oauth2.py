@@ -3,12 +3,13 @@ from datetime import datetime, timedelta, UTC
 from . import credentials, schemas
 from fastapi import Depends, status, HTTPException
 from fastapi.security import OAuth2PasswordBearer
+from typing import Optional
 
 oauth2_schema = OAuth2PasswordBearer(tokenUrl="login")
 
 SECRET_KEY = credentials.SECRET_KEY
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+ACCESS_TOKEN_EXPIRE_MINUTES = 1
 
 def create_access_token(data: dict):
     to_encode = data.copy()
@@ -24,15 +25,16 @@ def create_access_token(data: dict):
 
 def verify_access_token(token: str, credentials_exception):
     try:
+        print("token:", token)
         payload = jwt.decode(token, SECRET_KEY, [ALGORITHM])
+        print("credentials_exception", credentials_exception)
+        id: Optional[str] = payload.get("user_id")
 
-        user_id: str = payload.get("user_id")
-
-        if user_id is None:
+        if id is None:
             raise credentials_exception
         
-        token_data = schemas.TokenData(id=user_id)
-    
+        token_data = schemas.TokenData(id=id)
+        print("token data:", token_data)
     except JWTError:
         raise credentials_exception
     
@@ -41,6 +43,6 @@ def verify_access_token(token: str, credentials_exception):
 def get_current_user(token: str = Depends(oauth2_schema)):
     credentials_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                                           detail=f"Could not validate credentials",
-                                          headers={"WWW-Authenticate:": "Bearer"})
+                                          headers={"WWW-Authenticate": "Bearer"})
     
     return verify_access_token(token, credentials_exception)

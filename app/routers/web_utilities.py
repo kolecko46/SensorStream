@@ -13,9 +13,8 @@ router = APIRouter(
 async def show_calculator(request: Request,
                           user_id: int = Depends(oauth2.get_current_user)):
 
-    print(user_id)
-
-    return templates.TemplateResponse("web_utilities/calculator.html", {"request": request})
+    # return templates.TemplateResponse("web_utilities/calculator.html", {"request": request})
+    return {"data":"ok"}
 
 @router.post("/calculator")
 async def calculator_logic(data: schemas.CalculatorData,
@@ -29,6 +28,6 @@ async def calculator_logic(data: schemas.CalculatorData,
     elif data.operation == "divide":
         result = data.num1 / data.num2
     else:
-        return JSONResponse(content={"error":"Invalid Operation"}, status_code=400)
+        return {"error":"Invalid Operation"}
     
-    return JSONResponse(content={"result": result})
+    return {"result": result}

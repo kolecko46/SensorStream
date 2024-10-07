@@ -42,7 +42,11 @@
     </div>
 
         <script>
+            const user_token = localStorage.getItem("access_token");
+            console.log(user_token);
             console.log("calculator: ok2");
+
+
 
             document.getElementById('calculator').addEventListener("submit",async function(event){
                 event.preventDefault();
@@ -67,7 +71,6 @@
                 const result = await response.json();
                 document.getElementById('result').innerText = `Result: ${result.result}`;
             });
-            
         </script>
 </body>
 </html>

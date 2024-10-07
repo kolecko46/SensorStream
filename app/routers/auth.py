@@ -22,19 +22,19 @@ def login_html(request: Request):
     
     return templates.TemplateResponse("users/login.html", {"request": request})
 
-@router.post("")
+@router.post("", response_model=schemas.Token)
 def login(request: Request,
-          data: OAuth2PasswordRequestForm = Depends(),
+          user_credentials: OAuth2PasswordRequestForm = Depends(),
           database: Session = Depends(get_database)):
     
-    user = database.query(models.Users).filter(models.Users.email == data.username).first()
+    user = database.query(models.Users).filter(models.Users.email == user_credentials.username).first()
 
 
     if not user:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
                             detail=f"Invalid credentials")
     
-    if not utilities.verify_password(data.password, user.password):
+    if not utilities.verify_password(user_credentials.password, user.password):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
                             detail=f"Invalid credentials")
     
@@ -42,4 +42,4 @@ def login(request: Request,
     acces_token = oauth2.create_access_token({"user_id":user.id})
 
     # Return token
-    return JSONResponse(content={"access_token": acces_token, "token_type": "bearer"})
+    return {"access_token": acces_token,"token_type": "Bearer"}
