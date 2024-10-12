@@ -1,15 +1,16 @@
 from jose import JWTError, jwt
 from datetime import datetime, timedelta, UTC
-from . import credentials, schemas
+from . import schemas
 from fastapi import Depends, status, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from typing import Optional
+from config import settings
 
 oauth2_schema = OAuth2PasswordBearer(tokenUrl="login")
 
-SECRET_KEY = credentials.SECRET_KEY
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 1
+SECRET_KEY = settings.secret_key
+ALGORITHM = settings.algorithm
+ACCESS_TOKEN_EXPIRE_MINUTES = settings.access_token_expire_minutes
 
 def create_access_token(data: dict):
     to_encode = data.copy()
@@ -25,9 +26,7 @@ def create_access_token(data: dict):
 
 def verify_access_token(token: str, credentials_exception):
     try:
-        print("token:", token)
         payload = jwt.decode(token, SECRET_KEY, [ALGORITHM])
-        print("credentials_exception", credentials_exception)
         id: Optional[str] = payload.get("user_id")
 
         if id is None:

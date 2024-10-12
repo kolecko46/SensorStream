@@ -2,13 +2,12 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from routers import root_index, arduino, users, auth, web_utilities
-from modules.database_connector import engine
-from modules import models
+from config import settings
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-origins = ["http://192.168.0.101:3000",
+origins = ["http://192.168.0.101:3000", 
            "http://192.168.0.101:8000"]
 
 # Configure CORS
@@ -19,7 +18,6 @@ app.add_middleware(
     allow_methods=["*"],  # or specify methods
     allow_headers=["*"],  # or specify headers
 )
-
 
 app.include_router(root_index.router)
 app.include_router(users.router)

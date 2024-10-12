@@ -1,11 +1,12 @@
 import mysql.connector
 import time
-from modules import credentials
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from config import settings
 
-SQLALCHEMY_DATABASE_URL = credentials.database_url
+
+SQLALCHEMY_DATABASE_URL = settings.database_url
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
@@ -14,8 +15,6 @@ session_local = sessionmaker(autocommit=False,
                              bind=engine)
 
 Base = declarative_base()
-
-
 
 def get_database():
     database = session_local()
@@ -27,10 +26,10 @@ def get_database():
 while True:
     try:
         connection = mysql.connector.connect(
-            host = credentials.host,
-            user = credentials.user,
-            password = credentials.database_psw,
-            database = credentials.database
+            host = settings.database_host,
+            user = settings.database_user,
+            password = settings.database_password,
+            database = settings.database_name
         )
     
         cursor = connection.cursor(buffered=True)
