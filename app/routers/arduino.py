@@ -19,8 +19,8 @@ router = APIRouter(
 @router.get('/dht11',
             response_model=List[schemas.SensorData])
 def get_dht11_data(request: Request,
-                   database: Session = Depends(get_database),
-                   user_id: int = Depends(oauth2.get_current_user)):
+                   database: Session = Depends(get_database)):
+                #    user_id: int = Depends(oauth2.get_current_user)):
     
     data = database.query(DHT11_data).all()
 

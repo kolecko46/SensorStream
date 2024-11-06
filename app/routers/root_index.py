@@ -13,7 +13,7 @@ def root(request: Request):
     return templates.TemplateResponse("basics/root.html", {"request": request})
 
 @router.get('/index')
-def index(request: Request,
-          user_id: int = Depends(oauth2.get_current_user)):
+def index(request: Request):
+        #   user_id: int = Depends(oauth2.get_current_user)):
     
     return templates.TemplateResponse("basics/index.html", {"request": request})
